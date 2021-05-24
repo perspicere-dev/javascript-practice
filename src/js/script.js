@@ -17,23 +17,28 @@ const favoriteBooks = [];
 console.log('favoriteBooks', favoriteBooks);
 
 function initActions(){
-  const imagesList = booksList.querySelectorAll('.book__image');
-  console.log('imagesList', imagesList);
-  
-  imagesList.addEventListener('click', function(event){
+
+  booksList.addEventListener('click', function(event){
     event.preventDefault();
-    console.log('event.target.offsetParent', event.target.offsetParent);
+    console.log('event', event);
   });
-  
-  imagesList.addEventListener('dblclick', function(event){
-    if(!event.target.offsetParent.classList.contains('.book__image')){   //jak sprawdzić czy data-id jest w favoriteBooks[]?
-      image.classList.add('favorite');
-      favoriteBooks.push(image.getAttribute('data-id'));
-      console.log('favoriteBooksadd', favoriteBooks);
-    }else{
-      image.classList.remove('favorite');
-      favoriteBooks.splice(image.getAttribute('data-id')); // 2 x jest i tak dodawana pozycja do tablicy
-      console.log('favoriteBooksrem', favoriteBooks);
+
+  booksList.addEventListener('dblclick', function(event){
+    if(event.target.offsetParent.classList.contains('book__image')){
+      const image = event.target.offsetParent;
+      console.log('image', image);
+      if(!image.classList.contains('favorite')){   //jak sprawdzić czy data-id jest w favoriteBooks[]?
+        image.classList.add('favorite');
+        favoriteBooks.push(image.getAttribute('data-id'));
+        console.log('favoriteBooksadd', favoriteBooks);
+      }else{
+        image.classList.remove('favorite');
+        let imageId = image.getAttribute('data-id');
+        let indexOfImageId = favoriteBooks.indexOf(imageId);
+        console.log('indexOfImageId', indexOfImageId);
+        favoriteBooks.splice(indexOfImageId, 1); 
+        console.log('favoriteBooksrem', favoriteBooks);
+      }
     }
   });
 }
@@ -52,7 +57,3 @@ const app = {
 };
 
 app.init();
-
-
-
-
