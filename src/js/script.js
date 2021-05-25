@@ -36,15 +36,22 @@ function initActions(){
   });
 
   filtersSelector.addEventListener('click', function(event){
-    event.preventDefault();
+
     if(event.target.tagName == 'INPUT' 
     && event.target.type == 'checkbox' 
     && event.target.name == 'filter'){
-      console.log('value', event.target.value);
-      console.log(event);
-    }
+      const input = event.target;
+      const inputValue = input.getAttribute('value');
 
-  })
+      if(input.checked){
+        filters.push(inputValue);
+      }else{
+        const indexOfInput = filters.indexOf(inputValue);
+        filters.splice(indexOfInput, 1);
+      }
+    }
+    console.log('filters', filters);
+  });
 }
 
 const filters = [];
